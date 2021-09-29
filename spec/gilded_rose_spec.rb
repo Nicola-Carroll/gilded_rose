@@ -80,6 +80,36 @@ describe GildedRose do
     end
 
     context 'backstaged passes' do
+      it 'decreases a backstage pass sell-in by one' do
+        expect { gilded_rose.update_quality }.to change {
+          backstage_pass.sell_in
+        }.by(-1)
+      end
+
+      it 'increases quality by one when sell_in>10' do
+        expect { gilded_rose.update_quality }.to change {
+          backstage_pass.quality
+        }.by(1)
+      end
+
+      it 'increases quality by two when 10>=sell_in>5' do
+        4.times { gilded_rose.update_quality }
+        expect { gilded_rose.update_quality }.to change {
+          backstage_pass.quality
+        }.by(2)
+      end
+
+      it 'increases quality by three when 5>=sell_in>0' do
+        9.times { gilded_rose.update_quality }
+        expect { gilded_rose.update_quality }.to change {
+          backstage_pass.quality
+        }.by(3)
+      end
+
+      it 'its value drops to zero after the concert' do
+        15.times { gilded_rose.update_quality }
+        expect(backstage_pass.quality).to eq 0
+      end
     end
   end
 end
