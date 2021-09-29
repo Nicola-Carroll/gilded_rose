@@ -66,6 +66,17 @@ describe GildedRose do
     end
 
     context 'sulfuras' do
+      it 'unchages sulfuras sell_in' do
+        expect { gilded_rose.update_quality }.to change { sulfuras.sell_in }.by(
+          0
+        )
+      end
+
+      it 'unchages sulfuras quality' do
+        expect { gilded_rose.update_quality }.to change { sulfuras.quality }.by(
+          0
+        )
+      end
     end
 
     context 'backstaged passes' do
