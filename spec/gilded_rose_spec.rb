@@ -30,12 +30,12 @@ describe GildedRose do
     end
 
     context 'generic item' do
-      it 'descreases a generic item\'s sell-in by one' do
+      it 'decreases a generic item\'s sell-in by one' do
         expect { gilded_rose.update_quality }.to change { general_item.sell_in }
           .by(-1)
       end
 
-      it 'descreases a generic item\'s quality by one when sell-by is not reached' do
+      it 'decreases a generic item\'s quality by one when sell-by is not reached' do
         expect { gilded_rose.update_quality }.to change { general_item.quality }
           .by(-1)
       end
@@ -48,6 +48,21 @@ describe GildedRose do
     end
 
     context 'aged brie' do
+      it 'decreases bries\'s sell-in by one' do
+        expect { gilded_rose.update_quality }.to change { aged_brie.sell_in }
+          .by(-1)
+      end
+
+      it 'increases bries quality' do
+        expect { gilded_rose.update_quality }.to change { aged_brie.quality }
+          .by(1)
+      end
+
+      it 'has a max quality of 50' do
+        50.times { gilded_rose.update_quality }
+        expect { gilded_rose.update_quality }.to change { aged_brie.quality }
+          .by(0)
+      end
     end
 
     context 'sulfuras' do
